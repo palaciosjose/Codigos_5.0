@@ -1,0 +1,11 @@
+
+[29-Jun-2025 19:32:27 UTC] PHP Fatal error:  Uncaught Error: Class "UnifiedQueryEngine" not found in /home/warsup/streamdigi.warsup.shop/telegram_bot/webhook.php:467
+Stack trace:
+#0 /home/warsup/streamdigi.warsup.shop/telegram_bot/webhook.php(808): ejecutarBusqueda()
+#1 {main}
+  thrown in /home/warsup/streamdigi.warsup.shop/telegram_bot/webhook.php on line 467
+[29-Jun-2025 19:33:06 UTC] PHP Fatal error:  Uncaught Error: Class "UnifiedQueryEngine" not found in /home/warsup/streamdigi.warsup.shop/telegram_bot/webhook.php:467
+Stack trace:
+#0 /home/warsup/streamdigi.warsup.shop/telegram_bot/webhook.php(808): ejecutarBusqueda()
+#1 {main}
+  thrown in /home/warsup/streamdigi.warsup.shop/telegram_bot/webhook.php on line 467

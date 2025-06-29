@@ -1,0 +1,14 @@
+{
+  "require": {
+    "guzzlehttp/guzzle": "^7.5",
+    "monolog/monolog": "^3.0",
+    "vlucas/phpdotenv": "^5.5",
+    "longman/telegram-bot": "^0.81"
+  },
+  "autoload": {
+    "psr-4": {
+      "TelegramBot\\": "telegram_bot/",
+      "Shared\\": "shared/"
+    }
+  }
+}

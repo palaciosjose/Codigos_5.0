@@ -1,0 +1,403 @@
+/* ========================================
+   SISTEMA DE CÓDIGOS - TEMA NEÓN (VERSIÓN FINAL)
+   ======================================== */
+
+/* --- VARIABLES DE COLOR Y DISEÑO --- */
+:root {
+    --primary-color: #32FFB5; 
+    --secondary-color: #764ba2; 
+    --glow-color: rgba(50, 255, 181, 0.25); 
+    --glow-border-color: rgba(50, 255, 181, 0.4); 
+    --bg-primary: #1A1235; 
+    --bg-card: #2A1F4D; 
+    --bg-input: rgba(0, 0, 0, 0.3); 
+    --text-primary: #FFFFFF; 
+    --text-secondary: #BCAEE5; 
+    --text-muted: #8c80b1; 
+    --border-color-subtle: #8c80b1; 
+    --border-focus: var(--primary-color); 
+    --shadow-glow: 0 0 15px var(--glow-color); 
+    --shadow-glow-strong: 0 0 25px var(--glow-color); 
+    --radius-md: 8px; 
+    --radius-lg: 16px; 
+    --spacing-md: 1rem; 
+    --spacing-lg: 1.5rem; 
+    --transition-base: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* --- ESTILOS GENERALES Y FONDO ANIMADO --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Poppins', sans-serif; 
+    background-color: var(--bg-primary); 
+    color: var(--text-primary); 
+    min-height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+    overflow-x: hidden; 
+    position: relative; 
+    z-index: 0; 
+}
+body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('../images/fondo/fondo.jpg'); background-size: cover; background-position: center; filter: brightness(0.4); z-index: -2; animation: kenburns-effect 40s ease-in-out infinite alternate; }
+body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: repeating-linear-gradient( to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05) 1px, transparent 1px, transparent 4px ); pointer-events: none; z-index: -1; animation: scanline-effect 20s linear infinite; }
+@keyframes scanline-effect { from { background-position: 0 0; } to { background-position: 0 -400px; } }
+@keyframes kenburns-effect { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.1) translate(2%, -2%); } }
+
+/* --- BARRA DE NAVEGACIÓN --- */
+.navbar-modern { background: rgba(26, 18, 53, 0.5); backdrop-filter: blur(10px); border-bottom: none; box-shadow: var(--shadow-glow); position: relative; overflow: hidden; }
+.navbar-modern::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, var(--secondary-color), var(--primary-color), var(--secondary-color)); background-size: 200% 100%; animation: gradient-flow 4s linear infinite; }
+@keyframes gradient-flow { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+.navbar-modern .navbar-brand { font-weight: 600; color: var(--text-primary); }
+.navbar-modern .nav-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); font-weight: 500; text-decoration: none; padding: 0.4rem 0.8rem; border: 1px solid var(--border-color-subtle); border-radius: var(--radius-md); transition: all 0.3s ease; position: relative; overflow: hidden; z-index: 1; }
+.navbar-modern .nav-link:hover { color: var(--primary-color); border-color: var(--primary-color); background-color: var(--glow-color); text-shadow: 0 0 8px var(--glow-color); transform: translateY(-2px); }
+.navbar-modern .navbar-nav { gap: 0.5rem; }
+
+/* --- CONTENEDOR PRINCIPAL Y TARJETA --- */
+.main-container { flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: var(--spacing-lg); padding-top: 80px; }
+.main-card { 
+    width: 100%; 
+    max-width: 500px; 
+    background: var(--bg-card); 
+    border: 1px solid var(--glow-border-color); 
+    border-radius: var(--radius-lg); 
+    padding: var(--spacing-lg); 
+    box-shadow: var(--shadow-glow-strong); 
+    transition: all var(--transition-base); 
+    position: relative; 
+    /* ESTA PROPIEDAD ES LA QUE CAUSA EL PROBLEMA */
+    overflow: hidden; 
+    animation: card-glow-pulse 4s ease-in-out infinite; 
+}
+@keyframes card-glow-pulse { 0% { box-shadow: 0 0 25px var(--glow-color); } 50% { box-shadow: 0 0 40px var(--glow-border-color); } 100% { box-shadow: 0 0 25px var(--glow-color); } }
+
+/* ================================================================ */
+/* --- ESTA ES LA REGLA MÁGICA QUE SOLUCIONA EL CORTE DEL MENÚ --- */
+/* ================================================================ */
+.main-card.options-open {
+    overflow: visible;
+}
+/* ================================================================ */
+
+.main-card.expanded { max-width: 800px; }
+.hidden { display: none; }
+
+/* --- ELEMENTOS DEL FORMULARIO --- */
+.logo-container { text-align: center; margin-bottom: var(--spacing-md); }
+.logo { max-width: 150px; animation: float-effect 3s ease-in-out infinite; }
+@keyframes float-effect { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.main-title { text-align: center; font-weight: 600; font-size: 1.8rem; margin-bottom: var(--spacing-lg); min-height: 40px; }
+.search-form { display: flex; flex-direction: column; gap: var(--spacing-lg); }
+.form-group-modern { position: relative; }
+.form-input-modern { width: 100%; background-color: var(--bg-input); border: 1px solid var(--border-color-subtle); border-radius: 8px; color: var(--text-primary); padding: 12px 12px 12px 40px; font-size: 1rem; transition: 0.3s ease; }
+.form-input-modern:focus { outline: none; border-color: var(--border-focus); box-shadow: 0 0 10px var(--glow-color); }
+.form-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-muted); transition: color 0.3s ease; font-size: 1rem; }
+.form-input-modern:focus + .form-icon, .custom-select.open .form-icon { color: var(--primary-color); }
+.btn-search-modern { background-color: var(--primary-color); color: var(--bg-primary); border: none; border-radius: 8px; padding: 12px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: var(--transition-base); text-transform: uppercase; box-shadow: 0 0 15px var(--glow-color); animation: button-glow-pulse 2.5s ease-in-out infinite; }
+@keyframes button-glow-pulse { 0% { box-shadow: 0 0 15px var(--glow-color); } 50% { box-shadow: 0 0 25px var(--primary-color); } 100% { box-shadow: 0 0 15px var(--glow-color); } }
+.btn-search-modern:hover { transform: translateY(-3px); animation-play-state: paused; box-shadow: 0 0 30px var(--primary-color); }
+
+/* --- ESTILOS DEL MENÚ DESPLEGABLE PERSONALIZADO --- */
+.custom-select-wrapper { position: relative; }
+.custom-select { position: relative; }
+.custom-select__trigger { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 12px 12px 12px 40px; background-color: var(--bg-input); border: 1px solid var(--border-color-subtle); border-radius: 8px; cursor: pointer; color: var(--text-muted); transition: 0.3s ease; }
+.custom-select__trigger:hover { border-color: var(--glow-border-color); }
+.custom-select.open .custom-select__trigger { border-color: var(--border-focus); box-shadow: 0 0 10px var(--glow-color); }
+.custom-options { position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid var(--glow-border-color); border-radius: 8px; margin-top: 5px; max-height: 100px; overflow-y: auto; z-index: 1000; opacity: 0; visibility: hidden; transform: translateY(10px); transition: var(--transition-base); }
+.custom-select.open .custom-options { opacity: 1; visibility: visible; transform: translateY(0); }
+.custom-option { display: block; padding: 12px; cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease; color: var(--text-secondary); }
+.custom-option:hover { background-color: var(--glow-color); color: var(--primary-color); }
+.arrow { width: 10px; height: 10px; border-left: 2px solid var(--text-muted); border-bottom: 2px solid var(--text-muted); transform: rotate(-45deg); transition: transform 0.3s ease; }
+.custom-select.open .arrow { transform: rotate(135deg); }
+
+/* --- ESTILOS PARA LA BARRA DE SCROLL NEÓN --- */
+.custom-options::-webkit-scrollbar { width: 8px; }
+.custom-options::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); border-radius: 10px; }
+.custom-options::-webkit-scrollbar-thumb { background-color: var(--primary-color); border-radius: 10px; border: 2px solid var(--bg-card); box-shadow: 0 0 10px var(--glow-color); }
+.custom-options::-webkit-scrollbar-thumb:hover { background-color: #ffffff; box-shadow: 0 0 15px var(--glow-border-color); }
+
+/* --- CONTENEDOR DE RESULTADOS Y FOOTER --- */
+.results-container { animation: fadeIn 0.5s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.btn-back { display: inline-flex; align-items: center; gap: 8px; background: var(--glow-color); color: var(--primary-color); border: 1px solid var(--primary-color); padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: var(--transition-base); }
+.btn-back:hover { background: var(--primary-color); color: var(--bg-primary); box-shadow: var(--shadow-glow-strong); }
+.alert-modern { padding: var(--spacing-md); border-radius: 8px; display: flex; align-items: center; gap: 12px; }
+.alert-success-modern { background: rgba(50, 255, 181, 0.1); border: 1px solid rgba(50, 255, 181, 0.3); color: #adffde; }
+.alert-danger-modern { background: rgba(255, 77, 77, 0.1); border: 1px solid rgba(255, 77, 77, 0.3); color: #ff9a9a; }
+.result-content-wrapper { background: rgba(0,0,0,0.2); border-radius: 8px; padding: var(--spacing-lg); margin-top: var(--spacing-md); border: 1px solid var(--border-color-subtle); }
+.footer-modern { padding: var(--spacing-lg); text-align: center; color: var(--text-muted); font-size: 0.9rem; }
+.footer-modern a { color: var(--primary-color); text-decoration: none; font-weight: 600; }
+
+/* Alert Warning Modern */
+.alert-warning-modern {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    border: 2px solid #f39c12;
+    color: #856404;
+    border-radius: 15px;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 8px 25px rgba(243, 156, 18, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.alert-warning-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #f39c12, #e67e22);
+}
+
+.alert-warning-modern i {
+    font-size: 1.25rem;
+    margin-right: 0.75rem;
+    color: #f39c12;
+}
+
+/* Alert Info Modern */
+.alert-info-modern {
+    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+    border: 2px solid #17a2b8;
+    color: #0c5460;
+    border-radius: 15px;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 8px 25px rgba(23, 162, 184, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.alert-info-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #17a2b8, #138496);
+}
+
+.alert-info-modern i {
+    font-size: 1.25rem;
+    margin-right: 0.75rem;
+    color: #17a2b8;
+}
+
+/* ============================================================ */
+/* CORRECCIÓN PARA VISUALIZACIÓN MÓVIL DE EMAILS */
+/* Agrega este código al final de styles/modern_inicio.css */
+/* ============================================================ */
+
+/* Corrección para el contenedor principal en móvil */
+@media (max-width: 768px) {
+    /* Permitir que el contenido principal se desborde cuando sea necesario */
+    .main-card {
+        overflow: visible !important;
+        max-width: 95vw !important;
+        margin: 0 2.5vw !important;
+        padding: 1rem !important;
+    }
+    
+    /* Contenedor de resultados optimizado para móvil */
+    .results-container {
+        overflow: visible !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* Wrapper del contenido del email */
+    .result-content-wrapper {
+        overflow: visible !important;
+        max-width: 100% !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        padding: 0.75rem !important;
+        margin: 0 !important;
+    }
+    
+    /* Contenido del email */
+    .result-content-wrapper > div {
+        max-width: 100% !important;
+        overflow: visible !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+    }
+    
+    /* Asegurar que todo el contenido HTML del email se adapte */
+    .result-content-wrapper * {
+        max-width: 100% !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Tablas del email */
+    .result-content-wrapper table {
+        width: 100% !important;
+        table-layout: fixed !important;
+        border-collapse: collapse !important;
+    }
+    
+    .result-content-wrapper td,
+    .result-content-wrapper th {
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        padding: 0.5rem !important;
+    }
+    
+    /* Imágenes del email */
+    .result-content-wrapper img {
+        max-width: 100% !important;
+        height: auto !important;
+        display: block !important;
+        margin: 0 auto !important;
+    }
+    
+    /* Texto largo y códigos */
+    .result-content-wrapper pre,
+    .result-content-wrapper code {
+        white-space: pre-wrap !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        max-width: 100% !important;
+    }
+    
+    /* Divs con ancho fijo que pueden causar problemas */
+    .result-content-wrapper div[style*="width"] {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* Headers y títulos grandes */
+    .result-content-wrapper h1,
+    .result-content-wrapper h2,
+    .result-content-wrapper h3 {
+        font-size: 1.25rem !important;
+        line-height: 1.3 !important;
+        word-wrap: break-word !important;
+    }
+    
+    /* Párrafos y texto */
+    .result-content-wrapper p {
+        font-size: 0.9rem !important;
+        line-height: 1.4 !important;
+        margin-bottom: 0.75rem !important;
+        word-wrap: break-word !important;
+    }
+    
+    /* Números de código grandes */
+    .result-content-wrapper span[style*="font-size"],
+    .result-content-wrapper div[style*="font-size"] {
+        font-size: 1.5rem !important;
+        text-align: center !important;
+        display: block !important;
+        margin: 1rem 0 !important;
+        word-wrap: break-word !important;
+    }
+    
+    /* Botones del email */
+    .result-content-wrapper a[style*="background"],
+    .result-content-wrapper button {
+        display: block !important;
+        width: 100% !important;
+        max-width: 300px !important;
+        margin: 1rem auto !important;
+        padding: 0.75rem !important;
+        text-align: center !important;
+        word-wrap: break-word !important;
+    }
+}
+
+/* Corrección adicional para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .main-card {
+        max-width: 98vw !important;
+        margin: 0 1vw !important;
+        padding: 0.75rem !important;
+    }
+    
+    .result-content-wrapper {
+        padding: 0.5rem !important;
+        font-size: 0.85rem !important;
+    }
+    
+    .result-content-wrapper h1,
+    .result-content-wrapper h2,
+    .result-content-wrapper h3 {
+        font-size: 1.1rem !important;
+    }
+    
+    .result-content-wrapper p {
+        font-size: 0.85rem !important;
+    }
+}
+
+/* Asegurar que el viewport no cause scroll horizontal */
+@media (max-width: 768px) {
+    body {
+        overflow-x: hidden !important;
+    }
+    
+    .container {
+        max-width: 100% !important;
+        padding: 0 0.5rem !important;
+    }
+    
+    /* Prevenir cualquier elemento que pueda causar scroll horizontal */
+    * {
+        box-sizing: border-box !important;
+    }
+}
+
+/* ============================================================ */
+/* CORRECCIÓN ESPECÍFICA PARA EMAILS DE DISNEY+ Y SIMILARES */
+/* ============================================================ */
+
+/* Contenedores con fondo de marca */
+.result-content-wrapper div[style*="background-color"],
+.result-content-wrapper div[style*="background"] {
+    padding: 1rem !important;
+    margin: 0.5rem 0 !important;
+    border-radius: 8px !important;
+}
+
+/* Logos y imágenes de marca */
+.result-content-wrapper img[alt*="Disney"],
+.result-content-wrapper img[alt*="Netflix"],
+.result-content-wrapper img[alt*="logo"] {
+    max-height: 60px !important;
+    width: auto !important;
+    margin: 1rem auto !important;
+}
+
+/* Códigos de verificación destacados */
+.result-content-wrapper div:contains("572922"),
+.result-content-wrapper span:contains("572922"),
+.result-content-wrapper *[style*="font-size: 2"],
+.result-content-wrapper *[style*="font-size: 3"],
+.result-content-wrapper *[style*="font-size: 4"] {
+    font-size: 2rem !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    margin: 1.5rem 0 !important;
+    padding: 1rem !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px !important;
+    letter-spacing: 0.2em !important;
+    display: block !important;
+    width: 100% !important;
+}
+
+@media (max-width: 480px) {
+    .result-content-wrapper div:contains("572922"),
+    .result-content-wrapper span:contains("572922"),
+    .result-content-wrapper *[style*="font-size: 2"],
+    .result-content-wrapper *[style*="font-size: 3"],
+    .result-content-wrapper *[style*="font-size: 4"] {
+        font-size: 1.5rem !important;
+        padding: 0.75rem !important;
+        margin: 1rem 0 !important;
+    }
+}

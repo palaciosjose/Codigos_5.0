@@ -1,0 +1,47 @@
+/* Fondo a pantalla completa centrado con flex (ayudado por clases de Bootstrap) */
+body {
+  background-color: #141414; /* Fallback si no carga la imagen */
+  background-image: url('/images/fondo/fondo.jpg'); /* Ajusta la ruta de tu imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  margin: 0; /* Quita márgenes */
+}
+
+/* Contenedor con efecto de “parpadeo” */
+.parpadeo {
+  animation: parpadeo 1.5s infinite;
+  border-radius: 8px;
+  background-color: rgba(34, 34, 34, 0.8); /* Fondo semitransparente */
+}
+
+@keyframes parpadeo {
+  0% {
+    box-shadow:
+      0 0 10px rgba(0, 255, 255, 0.5),
+      0 0 20px rgba(0, 255, 255, 0.6),
+      0 0 30px rgba(0, 255, 255, 0.7),
+      0 0 40px rgba(0, 255, 255, 0.8);
+  }
+  50% {
+    box-shadow:
+      0 0 5px rgba(0, 81, 255, 0.637),
+      0 0 10px rgba(0, 255, 255, 0.4),
+      0 0 15px rgba(0, 255, 255, 0.5),
+      0 0 20px rgba(0, 255, 255, 0.6);
+  }
+  100% {
+    box-shadow:
+      0 0 10px rgba(0, 255, 255, 0.5),
+      0 0 20px rgba(0, 255, 255, 0.6),
+      0 0 30px rgba(0, 255, 255, 0.7),
+      0 0 40px rgba(0, 255, 255, 0.8);
+  }
+}
+
+/* Ajustes del logo */
+.logo {
+  display: block;
+  margin: 0 auto 20px;
+  max-width: 100%;
+  height: auto;
+}

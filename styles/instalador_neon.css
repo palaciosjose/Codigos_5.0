@@ -1,0 +1,593 @@
+/* ========================================
+   SISTEMA DE CÓDIGOS - TEMA NEÓN INSTALADOR
+   ======================================== */
+
+/* --- FUENTES Y VARIABLES DE COLOR --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+    --neon-primary: #00f2fe;
+    --neon-secondary: #a162f7;
+    --neon-success: #32FFB5;
+    --neon-danger: #ff4d4d;
+    --neon-warning: #f59e0b;
+    --bg-dark: #0f172a;
+    --card-bg: rgba(26, 18, 53, 0.6);
+    --input-bg: rgba(0, 0, 0, 0.3);
+    --text-light: #FFFFFF;
+    --text-muted: #bcaee5;
+    --border-color: rgba(0, 242, 254, 0.25);
+    --glow-color: rgba(0, 242, 254, 0.2);
+    --glow-strong: 0 0 25px var(--glow-color);
+}
+
+/* --- ESTILOS GENERALES Y FONDO --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../images/fondo/fondo.jpg') center/cover no-repeat;
+    filter: brightness(0.4) blur(3px);
+    z-index: -2;
+    animation: kenburns-effect 50s ease-in-out infinite alternate;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 15% 50%, var(--glow-color), transparent 40%),
+                radial-gradient(circle at 85% 50%, rgba(161, 98, 247, 0.1), transparent 40%);
+    animation: bg-pulse 8s ease-in-out infinite alternate;
+    z-index: -1;
+}
+
+@keyframes kenburns-effect {
+    from { transform: scale(1) translate(0, 0); }
+    to { transform: scale(1.1) translate(-2%, 2%); }
+}
+
+@keyframes bg-pulse {
+    to { opacity: 0.5; transform: scale(1.05); }
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.installer-container {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 2.5rem;
+    max-width: 1000px;
+    width: 100%;
+    box-shadow: var(--glow-strong);
+    animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- TÍTULOS Y TEXTOS --- */
+h1, h2, h3, h4 {
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2rem;
+    text-shadow: 0 0 10px var(--glow-color);
+}
+
+.text-secondary {
+    color: var(--text-muted) !important;
+}
+
+/* --- SECCIONES DEL FORMULARIO --- */
+.form-section {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* --- TABLAS --- */
+.table {
+    background-color: transparent;
+    border-color: var(--border-color);
+}
+
+.table-dark {
+    --bs-table-bg: rgba(0,0,0,0.1);
+    --bs-table-border-color: var(--border-color);
+    --bs-table-striped-bg: rgba(0,0,0,0.2);
+}
+
+.table thead th {
+    color: var(--neon-primary);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    border-bottom: 2px solid var(--neon-primary) !important;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(0, 242, 254, 0.05);
+}
+
+/* --- ESTADOS DE REQUERIMIENTOS --- */
+.requirement-ok { color: var(--neon-success) !important; font-weight: 600; }
+.requirement-error { color: var(--neon-danger) !important; font-weight: 600; }
+
+.requirement-ok .fa-check, .requirement-error .fa-times {
+    text-shadow: 0 0 8px currentColor;
+}
+
+/* --- FORMULARIOS Y BOTONES --- */
+.form-label {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.form-control {
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-light);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    background-color: var(--input-bg);
+    color: var(--text-light);
+    border-color: var(--neon-primary);
+    box-shadow: 0 0 15px var(--glow-color);
+    outline: none;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.btn {
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: none;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background: var(--neon-primary);
+    color: var(--bg-dark);
+    box-shadow: 0 0 15px var(--glow-color);
+}
+.btn-primary:hover {
+    background: var(--neon-primary);
+    color: var(--bg-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px var(--neon-primary);
+}
+
+.btn-success {
+    background: var(--neon-success);
+    color: var(--bg-dark);
+    box-shadow: 0 0 15px rgba(50, 255, 181, 0.2);
+}
+.btn-success:hover {
+    background: var(--neon-success);
+    color: var(--bg-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px var(--neon-success);
+}
+
+.btn-secondary {
+    background: rgba(255,255,255,0.1);
+    color: var(--text-light);
+    border: 1px solid var(--border-color);
+}
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: var(--neon-primary);
+    color: var(--neon-primary);
+}
+
+/* --- ALERTAS --- */
+.alert {
+    border-radius: 12px;
+    border-width: 1px;
+    border-style: solid;
+}
+.alert-success {
+    background-color: rgba(50, 255, 181, 0.1);
+    border-color: rgba(50, 255, 181, 0.3);
+    color: var(--neon-success);
+}
+.alert-warning {
+    background-color: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.3);
+    color: var(--neon-warning);
+}
+.alert-danger {
+    background-color: rgba(255, 77, 77, 0.1);
+    border-color: rgba(255, 77, 77, 0.3);
+    color: var(--neon-danger);
+}
+.alert-info {
+    background-color: rgba(0, 242, 254, 0.1);
+    border-color: rgba(0, 242, 254, 0.3);
+    color: var(--neon-primary);
+}
+
+/* --- OVERLAY DE PROGRESO --- */
+.installation-progress {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-content {
+    text-align: center;
+    color: var(--text-light);
+}
+
+.spinner-border {
+    width: 4rem;
+    height: 4rem;
+    color: var(--neon-primary);
+    border-width: 0.3em;
+}
+
+.hidden {
+    display: none;
+}
+        /* Variables de color específicas para el instalador, sobreescriben si es necesario */
+        :root {
+            --neon-primary: #00f2fe; /* Color primario del instalador neon.css */
+            --neon-secondary: #a162f7; /* Color secundario del instalador neon.css */
+            --neon-success: #32FFB5; /* Verde de éxito del instalador neon.css */
+            --neon-danger: #ff4d4d; /* Rojo de peligro del instalador neon.css */
+            --neon-warning: #f59e0b; /* Amarillo de advertencia del instalador neon.css */
+            --bg-dark: #0f172a; /* Fondo oscuro del instalador neon.css */
+            --card-bg: rgba(26, 18, 53, 0.6); /* Fondo de tarjeta del instalador neon.css */
+            --input-bg: rgba(0, 0, 0, 0.3); /* Fondo de input del instalador neon.css */
+            --text-light: #FFFFFF; /* Texto claro del instalador neon.css */
+            --text-muted: #bcaee5; /* Texto muted del instalador neon.css */
+            --border-color: rgba(0, 242, 254, 0.25); /* Color de borde del instalador neon.css */
+            --glow-color: rgba(0, 242, 254, 0.2); /* Color de glow del instalador neon.css */
+            --glow-strong: 0 0 25px var(--glow-color); /* Sombra de glow fuerte del instalador neon.css */
+
+            /* Re-definir algunas variables de modern_admin.css para que instalador_neon.css tenga prioridad */
+            --bg-purple-dark: var(--bg-dark); /* Usar el fondo oscuro de instalador_neon.css */
+            --card-purple: var(--card-bg); /* Usar el fondo de tarjeta de instalador_neon.css */
+            --input-dark: var(--input-bg); /* Usar el fondo de input de instalador_neon.css */
+            --accent-green: var(--neon-success); /* Usar el verde de éxito de instalador_neon.css */
+            --glow-green: var(--glow-color); /* Usar el glow de instalador_neon.ESTILOS CSS */
+            --glow-border: var(--border-color); /* Usar el borde de instalador_neon.css */
+            --danger-red: var(--neon-danger); /* Usar el rojo de peligro de instalador_neon.css */
+
+            /* Nuevas variables para los textos más visibles */
+            --text-info-light: var(--text-muted); /* Usar el texto muted de instalador_neon.css */
+            --text-success-light: var(--neon-success); /* Usar el verde de éxito de instalador_neon.css */
+        }
+        
+        /* Aplicar el fondo animado de modern_admin.css al body del instalador */
+        body {
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            background-color: var(--bg-purple-dark); /* Color de fondo principal de modern_admin.css */
+            color: var(--text-primary); /* Color de texto principal de modern_admin.css */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden; /* Evita el scroll horizontal */
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('../images/fondo/fondo.jpg'); /* Ruta de la imagen de fondo */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            filter: brightness(0.5) saturate(1.1) blur(2px);
+            z-index: -2;
+            animation: kenburns-effect 40s ease-in-out infinite alternate;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(26, 18, 53, 0.6), rgba(26, 18, 53, 0.6));
+            z-index: -1;
+        }
+
+        /* Re-definir animaciones si es necesario, de lo contrario usar las de modern_admin.css */
+        @keyframes kenburns-effect {
+            from { transform: scale(1) translate(0, 0); }
+            to { transform: scale(1.1) translate(2%, -2%); }
+        }
+
+        /* Contenedor principal con estilos de tarjeta de admin.css */
+        .container {
+            background: var(--card-purple); /* Color de tarjeta de modern_admin.css */
+            border: 1px solid var(--glow-border); /* Borde de glow de modern_admin.css */
+            border-radius: 20px; /* Radio de borde de modern_admin.css */
+            box-shadow: var(--shadow-lg); /* Usar una sombra más prominente del global_design */
+            padding: 2.5rem; /* Padding más grande para coincidir con el diseño */
+            position: relative; /* Para z-index si hay elementos flotantes */
+            z-index: 1; /* Asegura que esté por encima de los fondos */
+            width: 100%; /* Asegurar que ocupe el ancho disponible */
+            max-width: 900px; /* Limitar el ancho máximo para legibilidad */
+        }
+        .form-section {
+            background: rgba(0,0,0,0.2); /* Fondo más oscuro para secciones internas */
+            border: 1px solid var(--glow-border); /* Borde de glow de modern_admin.css */
+            border-radius: 16px; /* Radio de borde para secciones */
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm); /* Sombra sutil para secciones */
+        }
+        .step-indicator {
+            background: var(--card-purple); /* Fondo de los indicadores de paso */
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md); /* Sombra para los indicadores de paso */
+        }
+        .step-indicator .step {
+            color: var(--text-secondary); /* Color de texto secundario de modern_admin.css */
+            font-weight: 500;
+        }
+        .step-indicator .step.active {
+            color: var(--accent-green); /* Color de acento de modern_admin.css */
+            font-weight: 600;
+            text-shadow: 0 0 8px var(--glow-green); /* Efecto de glow para el paso activo */
+        }
+        .step-indicator .step.completed {
+            color: var(--accent-green); /* Color de acento para completado */
+        }
+        /* Clases de texto de modern_admin.css */
+        h1, h2, h3, h4 { color: var(--text-primary); font-weight: 600; }
+        .text-primary { color: var(--accent-green) !important; }
+        .text-secondary { color: var(--text-secondary) !important; }
+        .text-muted, .form-text { color: var(--text-info-light) !important; opacity: 0.9; }
+
+        /* Iconos de estado */
+        .requirement-ok { color: var(--accent-green) !important; font-weight: 600; }
+        .requirement-error { color: var(--danger-red) !important; font-weight: 600; }
+        .requirement-ok .fas, .requirement-error .fas { text-shadow: 0 0 8px currentColor; }
+
+        /* Inputs y Labels */
+        .form-label {
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .form-control {
+            background: var(--input-dark);
+            border: 1px solid var(--text-secondary); /* Borde sutil por defecto */
+            border-radius: 10px;
+            color: var(--text-primary);
+            padding: 0.75rem 1rem;
+            width: 100%;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-control:focus {
+            border-color: var(--accent-green);
+            box-shadow: 0 0 0 3px var(--glow-green);
+            outline: none;
+        }
+        .license-key-input {
+            font-family: 'monospace', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 1px; /* Ajustado para mejor legibilidad */
+            text-transform: uppercase;
+        }
+        .diagnostics-box {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--glow-border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Botones */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-flex; /* Para alinear íconos y texto */
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn-primary, .btn-success {
+            background: var(--accent-green);
+            color: var(--bg-purple-dark);
+            box-shadow: 0 0 15px var(--glow-green);
+        }
+        .btn-primary:hover, .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px var(--glow-green);
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 1px solid var(--glow-border);
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        /* Alertas */
+        .alert {
+            padding: 1rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+        }
+        .alert-success {
+            background: rgba(50, 255, 181, 0.1);
+            border: 1px solid rgba(50, 255, 181, 0.3);
+            color: #adffde;
+        }
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+        }
+        .alert-danger {
+            background: rgba(255, 77, 77, 0.1);
+            border: 1px solid rgba(255, 77, 77, 0.3);
+            color: #ff9a9a;
+        }
+        .alert-info {
+            background-color: rgba(0, 242, 254, 0.1);
+            border-color: rgba(0, 242, 254, 0.3);
+            color: var(--neon-primary);
+        }
+
+        /* Barra de progreso superior */
+        #topProgressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0; /* Se controla con JS */
+            height: 4px; /* Altura de la barra */
+            background: linear-gradient(90deg, var(--neon-primary), var(--neon-secondary));
+            box-shadow: 0 0 10px var(--neon-primary);
+            z-index: 10000; /* Asegura que esté por encima de todo */
+            transition: width 0.4s ease-in-out;
+        }
+
+        /* Ajustes específicos para la tabla de requerimientos */
+        .table {
+            border-collapse: separate; /* Permite aplicar border-spacing */
+            border-spacing: 0 8px; /* Espacio vertical entre filas */
+            background-color: transparent; /* Asegura que no tenga fondo por defecto */
+        }
+        .table thead th {
+            color: var(--accent-green);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            border-bottom: 2px solid var(--accent-green) !important;
+            vertical-align: middle; /* Alinea verticalmente el texto en el encabezado */
+            padding: 1rem; /* Espaciado uniforme para encabezados */
+        }
+        .table tbody tr {
+            background: var(--card-purple-light); /* Fondo de fila más claro para contraste, de modern_admin.css */
+            border: 1px solid var(--glow-border); /* Borde sutil entre filas */
+            color: var(--text-primary); /* Color de texto claro */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .table tbody td {
+            vertical-align: middle; /* Alinea verticalmente el texto en las celdas */
+            padding: 0.75rem 1rem; /* Espaciado interno */
+        }
+        .table tbody td:first-child {
+            border-left: 1px solid var(--glow-border); /* Mantiene el borde izquierdo */
+            border-top-left-radius: 10px; /* Redondea las esquinas */
+            border-bottom-left-radius: 10px;
+        }
+        .table tbody td:last-child {
+            border-right: 1px solid var(--glow-border); /* Mantiene el borde derecho */
+            border-top-right-radius: 10px; /* Redondea las esquinas */
+            border-bottom-right-radius: 10px;
+            white-space: nowrap; /* Fuerza el contenido a una sola línea para la columna final */
+            overflow: hidden; /* Oculta el desbordamiento si el contenido es muy largo */
+            text-overflow: ellipsis; /* Añade puntos suspensivos */
+            min-width: 120px; /* Aumenta el ancho mínimo para el texto de estado */
+            max-width: 150px; /* Ancho máximo si es necesario para evitar desbordamiento excesivo */
+        }
+        .table tbody tr:hover {
+            background-color: rgba(50, 255, 181, 0.1); /* Un poco más de glow al pasar el ratón */
+            box-shadow: 0 0 15px var(--glow-color); /* Agrega sombra al hover */
+        }
+        /* Para asegurar que los iconos estén bien alineados y no afecten el espaciado del texto */
+        .table tbody td .fab, .table tbody td .fas {
+            margin-right: 0.5rem;
+            font-size: 1rem; /* Tamaño de fuente normal para iconos */
+        }
+        /* Ajuste específico para el texto de estado para evitar que ocupe dos líneas */
+        .table tbody td span.requirement-ok, .table tbody td span.requirement-error {
+            display: inline-flex; /* Permite alinear el icono y el texto */
+            align-items: center;
+            white-space: nowrap; /* Mantiene el texto en una sola línea */
+            justify-content: flex-start; /* Alinea a la izquierda */
+        }
+        /* Asegurar que el encabezado ESTADO no se corte y se ajuste a la izquierda */
+        .table thead th:last-child {
+            white-space: nowrap; /* Evita que el encabezado se corte */
+            min-width: 120px; /* Ajusta este valor para que "ESTADO" se vea completo */
+            text-align: left; /* Alinea el texto del encabezado a la izquierda */
+            padding-right: 1rem; /* Asegura espacio si el texto es largo */
+        }
+        /* Alineación del texto "Estado" en las celdas, que parece ser el problema */
+        .table tbody td:last-child {
+            text-align: left; /* Alinea el contenido de la última columna a la izquierda */
+        }

@@ -1,0 +1,694 @@
+/* ========================================
+   SISTEMA DE CÓDIGOS - DISEÑO MODERNO
+   Archivo: styles/modern_admin.css
+   ======================================== */
+
+/* --- VARIABLES DE COLOR --- */
+:root {
+    --bg-purple-dark: #1A1235;
+    --card-purple: #2A1F4D;
+    --card-purple-light: #3a2d6d;
+    --input-dark: rgba(0, 0, 0, 0.3);
+    --text-primary: #FFFFFF;
+    --text-secondary: #BCAEE5;
+    --accent-green: #32FFB5;
+    --glow-green: rgba(50, 255, 181, 0.15);
+    --glow-border: rgba(50, 255, 181, 0.4);
+    --danger-red: #ff4d4d;
+
+    /* Nuevas variables para los textos más visibles */
+    --text-info-light: #C4B5FD; /* Un morado claro para info/muted */
+    --text-success-light: #90EE90; /* Verde más brillante para éxito */
+}
+
+/* --- FONDO ANIMADO --- */
+body.admin-page {
+    background-color: var(--bg-purple-dark);
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+}
+
+body.admin-page::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/images/fondo/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    filter: brightness(0.5) saturate(1.1) blur(2px);
+    z-index: -2;
+    animation: kenburns-effect 40s ease-in-out infinite alternate;
+}
+
+@keyframes kenburns-effect {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+body.admin-page::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(26, 18, 53, 0.6), rgba(26, 18, 53, 0.6));
+    z-index: -1;
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.admin-container {
+    background: var(--card-purple);
+    border: 1px solid var(--glow-border);
+    border-radius: 20px;
+    margin: 2rem;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+/* --- HEADER --- */
+.admin-header {
+    padding: 1.5rem 2rem;
+    background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2));
+}
+
+.admin-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.btn-back-modern {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glow-border);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+}
+
+.btn-back-modern:hover {
+    background: var(--glow-green);
+    color: var(--accent-green);
+    border-color: var(--accent-green);
+}
+
+/* --- PESTAÑAS DE NAVEGACIÓN --- */
+.nav-tabs-modern {
+    background: rgba(0,0,0,0.2);
+    border-bottom: 1px solid var(--glow-border);
+    overflow-x: auto;
+    flex-wrap: nowrap;
+}
+
+.nav-tabs-modern .nav-link {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 1rem 1.5rem;
+    font-weight: 500;
+    position: relative;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.nav-tabs-modern .nav-link:hover {
+    color: var(--text-primary);
+}
+
+.nav-tabs-modern .nav-link.active {
+    color: var(--accent-green);
+    background: var(--glow-green);
+    position: relative;
+}
+
+.nav-tabs-modern .nav-link.active::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent-green);
+    box-shadow: 0 0 10px var(--accent-green);
+}
+
+.tab-content { padding: 2rem; }
+
+/* --- TARJETAS INTERNAS --- */
+.admin-card {
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--glow-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.admin-card-header {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--glow-border);
+    /* Flexbox para alinear título y acciones */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Permitir que los elementos se envuelvan en pantallas pequeñas */
+    gap: 1rem; /* Espacio entre los elementos del header */
+}
+
+.admin-card-title { font-size: 1.2rem; font-weight: 600; color: var(--text-primary); }
+
+
+/*
+*
+*
+* --- INICIO DE CAMBIOS ---
+*
+*
+*/
+
+/* --- FORMULARIOS (CORREGIDO) --- */
+.form-group-admin {
+    margin-bottom: 1.5rem; /* Aumentamos el espacio entre cada grupo de campos */
+}
+
+.form-label-admin {
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    display: flex; /* Alineación de icono y texto */
+    align-items: center;
+    gap: 0.5rem;
+}
+.form-control-admin {
+    background: var(--input-dark);
+    border: 1px solid var(--text-secondary);
+    border-radius: 10px;
+    color: var(--text-primary);
+    padding: 0.75rem 1rem;
+    width: 100%;
+}
+.form-control-admin:focus {
+    border-color: var(--accent-green);
+    background: var(--input-dark);
+    box-shadow: 0 0 0 3px var(--glow-green);
+    outline: none;
+}
+/* Hacemos visible el texto de ayuda */
+.form-group-admin .text-muted {
+    color: var(--text-info-light) !important; /* Usamos la nueva variable */
+    opacity: 0.9; /* Un poco más de opacidad */
+    font-size: 0.85rem; /* Ligeramente más grande */
+    display: block;
+    margin-top: 0.5rem;
+}
+.text-muted { /* Asegurar que cualquier otro .text-muted también sea legible */
+    color: var(--text-info-light) !important;
+    opacity: 0.9;
+}
+
+/* --- BOTONES --- */
+.btn-admin {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.btn-primary-admin { background: var(--accent-green); color: var(--bg-purple-dark); box-shadow: 0 0 15px var(--glow-green); }
+.btn-primary-admin:hover { transform: translateY(-2px); box-shadow: 0 0 25px var(--glow-green); }
+.btn-danger-admin { background: transparent; color: var(--danger-red); border: 1px solid var(--danger-red); }
+.btn-danger-admin:hover { background: rgba(255, 77, 77, 0.1); box-shadow: 0 0 10px rgba(255, 77, 77, 0.2); }
+.btn-success-admin { background: var(--accent-green); color: var(--bg-purple-dark); }
+.btn-success-admin:hover { transform: translateY(-2px); box-shadow: 0 0 20px var(--glow-green); }
+
+
+/* --- TABLAS --- */
+.table-admin { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
+.table-admin thead th {
+    padding: 1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-bottom: 2px solid var(--glow-border);
+    text-align: left;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+.table-admin tbody tr { background: transparent; }
+.table-admin tbody td {
+    padding: 1rem;
+    background: var(--card-purple-light);
+    color: var(--text-primary);
+    vertical-align: middle;
+    border-top: 1px solid var(--glow-border);
+    border-bottom: 1px solid var(--glow-border);
+}
+.table-admin tbody td:first-child { border-left: 1px solid var(--glow-border); border-radius: 10px 0 0 10px; }
+.table-admin tbody td:last-child { border-right: 1px solid var(--glow-border); border-radius: 0 10px 10px 0; }
+.table-admin .d-flex {
+    gap: 0.5rem; /* Espacio entre botones */
+}
+.badge-admin { /* Estilos para los badges de las tablas */
+    padding: 0.3em 0.6em;
+    border-radius: 5px;
+    font-size: 0.75em;
+    font-weight: 600;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+}
+.badge-success-admin { background-color: var(--accent-green); color: var(--bg-purple-dark); }
+.badge-danger-admin { background-color: var(--danger-red); color: white; }
+.badge-info-admin { background-color: rgba(50, 255, 181, 0.2); color: var(--accent-green); border: 1px solid var(--glow-border); }
+
+
+/* --- MODALES --- */
+.modal-admin .modal-content {
+    background: var(--card-purple);
+    border: 1px solid var(--glow-border);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+.modal-admin .modal-header {
+    border-bottom: 1px solid var(--glow-border);
+    color: var(--text-primary);
+}
+.modal-admin .modal-body, .modal-admin .modal-footer {
+    background: transparent;
+    border-top: 1px solid var(--glow-border);
+}
+.modal-admin .btn-close-white {
+    filter: invert(1) grayscale(100%) brightness(200%);
+    opacity: 0.8;
+}
+.modal-admin .btn-close-white:hover {
+    opacity: 1;
+}
+
+/* --- CAMPOS DE BÚSQUEDA (NUEVOS ESTILOS NEÓN) --- */
+.search-box-admin {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: var(--input-dark);
+    border: 1px solid var(--glow-border); /* Borde neón sutil */
+    border-radius: 10px;
+    padding: 0.5rem 0.8rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 8px rgba(50, 255, 181, 0.1); /* Sombra neón inicial */
+    min-width: 200px; /* Ancho mínimo para que se vea bien */
+    flex-grow: 1; /* Permite que crezca un poco para llenar espacio */
+}
+
+.search-box-admin:focus-within {
+    border-color: var(--accent-green); /* Borde de enfoque más intenso */
+    box-shadow: 0 0 15px var(--glow-green); /* Sombra neón más fuerte en foco */
+    transform: translateY(-2px); /* Pequeño efecto de levantamiento */
+}
+
+.search-icon-admin {
+    color: var(--text-secondary); /* Color del icono */
+    margin-right: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.search-input-admin {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary); /* Color del texto de entrada */
+    font-size: 0.9rem;
+    padding: 0; /* Quitar padding interno para que lo controle el padre */
+}
+
+.search-input-admin::placeholder {
+    color: var(--text-secondary); /* Color del placeholder */
+    opacity: 0.7;
+}
+
+.search-input-admin:-webkit-autofill,
+.search-input-admin:-webkit-autofill:hover,
+.search-input-admin:-webkit-autofill:focus,
+.search-input-admin:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--input-dark) inset !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
+}
+
+.search-clear-admin {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+    padding: 0.2rem;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    display: flex; /* Para centrar el icono */
+    align-items: center;
+    justify-content: center;
+}
+
+.search-clear-admin:hover {
+    color: var(--accent-green);
+    background-color: rgba(50, 255, 181, 0.1);
+}
+
+/* Información de búsqueda (debajo de la barra de búsqueda) */
+.search-results-info {
+    margin-top: 0.8rem;
+    color: var(--text-info-light); /* Aseguramos que sea visible */
+    font-size: 0.85rem;
+}
+
+/* Animación para el contador de resultados */
+@keyframes countPulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+.search-results-info span#usersCount,
+.search-results-info span#emailsCount,
+.search-results-info span#platformsCount,
+.search-results-info span#assignmentsCount {
+    font-weight: 600;
+    color: var(--accent-green);
+}
+
+/* Estilos para "no hay resultados" en la tabla */
+.table-admin .no-results-row td {
+    color: var(--text-info-light); /* Usamos el color de información */
+    font-style: italic;
+    opacity: 0.9;
+}
+.table-admin .no-results-row .fa-search {
+    color: var(--text-secondary); /* Un poco más oscuro que el texto, pero visible */
+    opacity: 0.6;
+}
+
+/* Estilo para resaltar la búsqueda */
+.search-match {
+    background-color: rgba(50, 255, 181, 0.3); /* Un fondo neón sutil */
+    color: var(--text-primary); /* Asegura que el texto se vea bien */
+    padding: 0.1em 0.2em;
+    border-radius: 3px;
+}
+
+/* --- AJUSTE DE DISTRIBUCIÓN DE BOTONES Y BARRA DE BÚSQUEDA --- */
+/* Contenedor principal que agrupa la barra de búsqueda y los botones de acción */
+.action-buttons-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Espacio entre los elementos */
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+    justify-content: flex-end; /* Alinea los elementos a la derecha */
+    margin-left: auto; /* Empuja este grupo completo a la derecha */
+    /* Para invertir el orden visual sin cambiar el HTML */
+    flex-direction: row-reverse; /* Esto pone el último elemento primero visualmente */
+}
+
+/* Ajuste específico para el search-box-admin dentro de este grupo */
+.action-buttons-group .search-box-admin {
+    max-width: 300px; /* Mantener un ancho máximo para el campo de búsqueda */
+    flex-grow: 1; /* Puede crecer hasta su max-width */
+    flex-shrink: 1; /* Puede encogerse si es necesario */
+}
+
+/* Media query para pantallas más pequeñas: ajustar la alineación si es necesario */
+@media (max-width: 768px) {
+    .action-buttons-group {
+        justify-content: center; /* Centrar elementos en pantallas pequeñas */
+        width: 100%; /* Ocupar todo el ancho disponible */
+        flex-direction: column; /* Apilar elementos verticalmente en móviles */
+        align-items: stretch; /* Estirar elementos al ancho completo */
+        margin-left: 0; /* Eliminar margen auto en móvil para centrar */
+    }
+    /* El orden se mantiene invertido al apilar, si quieres que se apile botón arriba, luego búsqueda,
+       deberías considerar el orden del HTML en lugar de row-reverse aquí.
+       Pero si el HTML ya está "botón luego búsqueda", row-reverse lo haría "búsqueda luego botón".
+       Si quieres "botón luego búsqueda" en responsive, y ya tienes el HTML así, simplemente no uses flex-direction: column-reverse;
+       lo dejaremos en column para que se apile normalmente. */
+    .action-buttons-group .search-box-admin,
+    .action-buttons-group .btn-admin {
+        max-width: 100%; /* Ocupar todo el ancho disponible en móvil */
+        width: 100%; /* Asegurar el 100% de ancho */
+    }
+}
+
+/* Ajuste para que el título y el grupo de botones se separen bien */
+.admin-card-header {
+    display: flex;
+    justify-content: space-between; /* Título a la izquierda, botones a la derecha */
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem; /* Espacio entre título y grupo de botones */
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--glow-border);
+}
+
+/* Contenedor de información de licencia */
+.license-info-container {
+    margin-top: 1rem;
+}
+
+/* Tarjetas de estado de licencia */
+.license-status-card {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glow-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.license-status-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+}
+
+.license-status-card.status-success {
+    border-color: var(--accent-green);
+    background: rgba(50, 255, 181, 0.1);
+}
+
+.license-status-card.status-warning {
+    border-color: #ffd700;
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.license-status-card.status-danger {
+    border-color: var(--danger-red);
+    background: rgba(255, 77, 77, 0.1);
+}
+
+.license-status-card.status-info {
+    border-color: #17a2b8;
+    background: rgba(23, 162, 184, 0.1);
+}
+
+/* Iconos de licencia */
+.license-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.license-status-card.status-success .license-icon {
+    color: var(--accent-green);
+}
+
+.license-status-card.status-warning .license-icon {
+    color: #ffd700;
+}
+
+.license-status-card.status-danger .license-icon {
+    color: var(--danger-red);
+}
+
+.license-status-card.status-info .license-icon {
+    color: #17a2b8;
+}
+
+.license-status-card:not([class*="status-"]) .license-icon {
+    color: var(--text-secondary);
+}
+
+/* Texto de estado de licencia */
+.license-status-text h5 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+.license-status-text p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Barra de progreso de licencia */
+.license-progress-container {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--glow-border);
+    border-radius: 12px;
+}
+
+.license-progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.license-progress-bar {
+    width: 100%;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.license-progress-fill {
+    height: 100%;
+    transition: width 0.6s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.license-progress-fill.progress-success {
+    background: linear-gradient(90deg, var(--accent-green), #20c997);
+}
+
+.license-progress-fill.progress-info {
+    background: linear-gradient(90deg, #17a2b8, #20c997);
+}
+
+.license-progress-fill.progress-warning {
+    background: linear-gradient(90deg, #ffd700, #ff8c00);
+}
+
+.license-progress-fill.progress-danger {
+    background: linear-gradient(90deg, var(--danger-red), #dc3545);
+}
+
+/* Animación de la barra de progreso */
+.license-progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Fechas de la licencia */
+.license-progress-dates {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.license-start, .license-end {
+    display: flex;
+    align-items: center;
+}
+
+/* Alertas de licencia */
+.alert-admin.alert-warning-admin {
+    background: rgba(255, 215, 0, 0.1);
+    border-color: #ffd700;
+    color: #ffd700;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .license-status-card {
+        height: auto;
+        margin-bottom: 1rem;
+    }
+    
+    .license-progress-dates {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+    
+    .license-progress-header {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+}
+
+/* Efecto de pulsado para licencias próximas a vencer */
+.license-status-card.status-danger {
+    animation: danger-pulse 2s ease-in-out infinite;
+}
+
+@keyframes danger-pulse {
+    0%, 100% { 
+        border-color: var(--danger-red);
+        box-shadow: 0 0 10px rgba(255, 77, 77, 0.2);
+    }
+    50% { 
+        border-color: #ff6b6b;
+        box-shadow: 0 0 20px rgba(255, 77, 77, 0.4);
+    }
+}
+
+.license-status-card.status-warning {
+    animation: warning-pulse 3s ease-in-out infinite;
+}
+
+@keyframes warning-pulse {
+    0%, 100% { 
+        border-color: #ffd700;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+    }
+    50% { 
+        border-color: #ffed4a;
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    }
+}
