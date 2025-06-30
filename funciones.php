@@ -32,12 +32,12 @@ if (!defined('INSTALLER_MODE')) {
     }
 }
 
-/**
- * Mostrar error de licencia
- */
 function showLicenseError() {
     $license_client = new ClientLicense();
     $diagnostic_info = $license_client->getDiagnosticInfo();
+    
+    // Verificar si el sistema está instalado
+    $system_installed = is_installed();
     
     // Limpiar cualquier salida previa
     if (ob_get_level()) {
@@ -87,6 +87,34 @@ function showLicenseError() {
                 font-family: monospace;
                 font-size: 0.9rem;
             }
+            .btn-renew {
+                background: linear-gradient(45deg, #28a745, #20c997);
+                border: none;
+                color: white;
+                font-weight: 600;
+                padding: 12px 30px;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+            }
+            .btn-renew:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+                color: white;
+            }
+            .btn-install {
+                background: linear-gradient(45deg, #007bff, #0056b3);
+                border: none;
+                color: white;
+                font-weight: 600;
+                padding: 12px 30px;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+            }
+            .btn-install:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+                color: white;
+            }
         </style>
     </head>
     <body>
@@ -98,34 +126,68 @@ function showLicenseError() {
             <p class="text-muted mb-4">
                 Este software requiere una licencia válida para funcionar correctamente.
             </p>
-            <div class="alert alert-danger">
+            
+            <div class="alert alert-danger" role="alert">
                 <i class="fas fa-exclamation-triangle me-2"></i>
                 <strong>Estado:</strong> Licencia no válida o no encontrada
+            </div>';
+    
+    if ($system_installed) {
+        echo '
+            <div class="alert alert-info" role="alert">
+                <i class="fas fa-info-circle me-2"></i>
+                El sistema está instalado correctamente. Solo necesita renovar su licencia.
             </div>
             
+            <div class="mb-4">
+                <p class="mb-3">Su licencia ha expirado o no es válida. Para continuar usando el sistema:</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                    <a href="renovar_licencia.php" class="btn btn-renew btn-lg me-md-2">
+                        <i class="fas fa-sync-alt me-2"></i>Renovar Licencia
+                    </a>
+                    <a href="mailto:soporte@tudominio.com" class="btn btn-outline-secondary btn-lg">
+                        <i class="fas fa-envelope me-2"></i>Contactar Soporte
+                    </a>
+                </div>
+            </div>';
+    } else {
+        echo '
+            <div class="alert alert-warning" role="alert">
+                <i class="fas fa-tools me-2"></i>
+                El sistema no está instalado completamente.
+            </div>
+            
+            <div class="mb-4">
+                <p class="mb-3">Para comenzar a usar el sistema, debe completar la instalación:</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                    <a href="instalacion/instalador.php" class="btn btn-install btn-lg me-md-2">
+                        <i class="fas fa-download me-2"></i>Ir al Instalador
+                    </a>
+                    <a href="mailto:soporte@tudominio.com" class="btn btn-outline-secondary btn-lg">
+                        <i class="fas fa-envelope me-2"></i>Contactar Soporte
+                    </a>
+                </div>
+            </div>';
+    }
+    
+    echo '
             <div class="diagnostic-info">
                 <h6><i class="fas fa-wrench me-2"></i>Información de Diagnóstico:</h6>
-                <ul class="list-unstyled mb-0">
-                    <li><strong>Directorio existe:</strong> ' . ($diagnostic_info['directory_exists'] ? 'SÍ' : 'NO') . '</li>
-                    <li><strong>Archivo existe:</strong> ' . ($diagnostic_info['file_exists'] ? 'SÍ' : 'NO') . '</li>
-                    <li><strong>Archivo legible:</strong> ' . ($diagnostic_info['file_readable'] ? 'SÍ' : 'NO') . '</li>
-                    <li><strong>Dominio actual:</strong> ' . htmlspecialchars($_SERVER['HTTP_HOST']) . '</li>
-                </ul>
+                <strong>Directorio existe:</strong> ' . ($diagnostic_info['directory_exists'] ? 'Sí' : 'No') . '<br>
+                <strong>Archivo existe:</strong> ' . ($diagnostic_info['file_exists'] ? 'Sí' : 'No') . '<br>
+                <strong>Archivo legible:</strong> ' . ($diagnostic_info['file_readable'] ? 'Sí' : 'No') . '<br>
+                <strong>Dominio actual:</strong> ' . htmlspecialchars($_SERVER['HTTP_HOST']) . '
             </div>
             
-            <div class="mt-4">
-                <p class="text-muted small">
-                    <i class="fas fa-info-circle me-1"></i>
-                    Contacte al administrador del sistema para resolver este problema.
-                </p>
-                <a href="instalacion/instalador.php" class="btn btn-primary">
-                    <i class="fas fa-cogs me-2"></i>Ir al Instalador
-                </a>
-            </div>
+            <p class="text-muted mt-3">
+                <i class="fas fa-info-circle me-1"></i>
+                Contacte al administrador del sistema para resolver este problema.
+            </p>
         </div>
     </body>
     </html>';
-}
+    
+    exit();
 
 // Incluir dependencias
 require_once 'config/config.php';
