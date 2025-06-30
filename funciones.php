@@ -186,8 +186,9 @@ function showLicenseError() {
         </div>
     </body>
     </html>';
-    
+
     exit();
+}
 
 // Incluir dependencias
 require_once 'config/config.php';
