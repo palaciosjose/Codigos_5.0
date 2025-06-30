@@ -99,6 +99,13 @@ class ClientLicense {
         
         return true;
     }
+    /**
+     * Verificar si existe archivo de licencia
+     */
+    public function hasLicense() {
+        return file_exists($this->license_file) && is_readable($this->license_file);
+    }
+
     
     /**
      * Activar licencia
@@ -175,12 +182,6 @@ class ClientLicense {
         return $license_data['status'] === 'active';
     }
     
-    /**
-     * Verificar si existe archivo de licencia
-     */
-    public function hasLicense() {
-        return file_exists($this->license_file) && is_readable($this->license_file);
-    }
     
     /**
      * Obtener información de la licencia
